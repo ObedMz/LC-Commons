@@ -9,4 +9,5 @@ public class Auth {
     private String ip;
     private Instant lastConnection;
     private boolean Logged;
+    private String status;
 }

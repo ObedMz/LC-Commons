@@ -1,7 +1,7 @@
 package obed.me.lccommons.api.services;
 
 import lombok.Getter;
-import obed.me.lccommons.api.entities.User;
+import obed.me.lccommons.api.entities.PlayerData;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UserProvider {
     private static volatile UserProvider instance;
     private final WebClient apiClient = WebClient.getInstance();
-    private ConcurrentHashMap<String, User> usersCache = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, PlayerData> usersCache = new ConcurrentHashMap<>();
     private final String ENDPOINT = EndPointType.USER.getEndPoint();
     private UserProvider() {
     }
@@ -24,12 +24,12 @@ public class UserProvider {
         return instance;
     }
 
-    public User createUser(User user) {
-        return apiClient.create(ENDPOINT, user, User.class);
+    public PlayerData createUser(PlayerData user) {
+        return apiClient.create(ENDPOINT, user, PlayerData.class);
     }
 
-    public User getUserByName(String name) {
-        return apiClient.get(ENDPOINT.concat(name), User.class);
+    public PlayerData getUserByName(String name) {
+        return apiClient.get(ENDPOINT.concat(name), PlayerData.class);
     }
     public void deleteUser(String name){
         apiClient.delete(ENDPOINT.concat(name));
