@@ -2,20 +2,22 @@ package obed.me.lccommons.api.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Data;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
 
 
+
+@Data
 public class WebClient {
     private static volatile WebClient instance;
     private final HttpClient httpClient;
     private final ObjectMapper mapper;
-    private static final String BASE_ENDPOINT = "http://localhost";
+    private String BASE_ENDPOINT = "s1.nodes.hypix.dev:30000";
 
     private WebClient() {
         this.mapper = new ObjectMapper();
@@ -49,21 +51,6 @@ public class WebClient {
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(BASE_ENDPOINT.concat(endpoint))).
                     header("Content-Type", "application/json").GET().build();
             return mapper.readValue(httpClient.send(request, HttpResponse.BodyHandlers.ofString()).body(), responseType);
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public <E> List<E> get(String endpoint, TypeReference<List<E>> responseType) {
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE_ENDPOINT.concat(endpoint)))
-                    .header("Content-Type", "application/json")
-                    .GET()
-                    .build();
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            return mapper.readValue(response.body(), responseType);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return null;

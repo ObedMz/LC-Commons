@@ -9,7 +9,6 @@ public class RankProvider {
     private static volatile RankProvider instance;
     private final WebClient apiClient = WebClient.getInstance();
     private ConcurrentHashMap<String, Rank> rankCache = new ConcurrentHashMap<>();
-    private final String ENDPOINT = EndPointType.RANK.getEndPoint();
     private RankProvider() {
     }
 
@@ -24,18 +23,18 @@ public class RankProvider {
     }
 
     public Rank createRank(Rank rank) {
-        return apiClient.create(ENDPOINT, rank, Rank.class);
+        return apiClient.create(EndPointType.RANK.getEndPoint(), rank, Rank.class);
     }
 
     public Rank getRankByName(String name) {
-        return apiClient.get(ENDPOINT.concat(name), Rank.class);
+        return apiClient.get(EndPointType.RANK.getEndPoint().concat(name), Rank.class);
     }
     public List<Rank> getAllRanks() {
-        return List.of(apiClient.get(ENDPOINT, Rank[].class));
+        return List.of(apiClient.get(EndPointType.RANKS.getEndPoint(), Rank[].class));
     }
 
 
     public void deleteRank(String name){
-        apiClient.delete(ENDPOINT.concat(name));
+        apiClient.delete(EndPointType.RANK.getEndPoint().concat(name));
     }
 }
