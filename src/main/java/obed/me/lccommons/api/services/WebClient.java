@@ -1,6 +1,5 @@
 package obed.me.lccommons.api.services;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 
