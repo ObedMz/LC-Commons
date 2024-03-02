@@ -1,0 +1,5 @@
+name: LCCommons
+version: '${project.version}'
+main: obed.me.lccommons.spigot.SpigotCommons
+api-version: '1.20'
+load: STARTUP

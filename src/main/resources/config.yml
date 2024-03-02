@@ -1,0 +1,25 @@
+permissions:
+  DEFAULT:
+    - minelc.default
+    - minelc.tell
+  VIP:
+    - minelc.vip
+    - "{heredar: DEFAULT}"
+  SVIP:
+    - minelc.svip
+    - "{heredar: VIP}"
+  ELITE:
+    - minelc.elite
+    - "{heredar: SVIP}"
+  RUBY:
+    - minelc.ruby
+    - "{heredar: ELITE}"
+  MOD:
+    - minelc.mod
+    - "{heredar: AYUDANTE}"
+  ADMIN:
+    - minelc.admin
+    - "{heredar: MOD}"
+  OWNER:
+    - minelc.owner
+    - "{heredar: ADMIN}"

@@ -1,0 +1,4 @@
+name: MineCore
+version: '${project.version}'
+main: obed.me.lccommons.bungee.BungeeCommons
+author: ObedMz
