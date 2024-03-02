@@ -9,13 +9,16 @@ import java.util.UUID;
 
 @Data
 public class User {
-    private UUID id;
-    private String name;
+    private UUID uuid;
+    private boolean premium;
+    private String username;
+    private String password;
     private Auth authInfo;
     private Rank rank;
-    private Punishment punishment;
+    private Punishment Activepunishment;
 
-    public User(String name){
-        this.name = name;
+    public User(String name, String password){
+        this.username = name;
+        this.password = password;
     }
 }

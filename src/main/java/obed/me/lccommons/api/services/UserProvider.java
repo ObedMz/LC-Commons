@@ -10,7 +10,7 @@ public class UserProvider {
     private static volatile UserProvider instance;
     private final WebClient apiClient = WebClient.getInstance();
     private ConcurrentHashMap<String, User> usersCache = new ConcurrentHashMap<>();
-    private final String USER_ENDPOINT = "v1/user/";
+    private final String ENDPOINT = EndPointType.USER.getEndPoint();
     private UserProvider() {
     }
 
@@ -25,13 +25,13 @@ public class UserProvider {
     }
 
     public User createUser(User user) {
-        return apiClient.create(USER_ENDPOINT, user, User.class);
+        return apiClient.create(ENDPOINT, user, User.class);
     }
 
     public User getUserByName(String name) {
-        return apiClient.get(USER_ENDPOINT.concat(name), User.class);
+        return apiClient.get(ENDPOINT.concat(name), User.class);
     }
     public void deleteUser(String name){
-        apiClient.delete(USER_ENDPOINT.concat(name));
+        apiClient.delete(ENDPOINT.concat(name));
     }
 }
