@@ -1,6 +1,8 @@
 package obed.me.lccommons.api.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+
 import lombok.Data;
 
 import java.io.IOException;
@@ -16,7 +18,7 @@ public class WebClient {
     private static volatile WebClient instance;
     private final HttpClient httpClient;
     private final ObjectMapper mapper;
-    private String BASE_ENDPOINT = "s1.nodes.hypix.dev:30000";
+    private String BASE_ENDPOINT = "http://213.133.102.110:30000/";
 
     private WebClient() {
         this.mapper = new ObjectMapper();
@@ -37,7 +39,10 @@ public class WebClient {
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(BASE_ENDPOINT.concat(endpoint))).
                     header("Content-Type", "application/json").POST
                             (HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(body))).build();
-            return mapper.readValue(httpClient.send(request, HttpResponse.BodyHandlers.ofString()).body(), responseType);
+            String var = httpClient.send(request, HttpResponse.BodyHandlers.ofString()).body();
+
+            System.out.println(var);
+            return mapper.readValue(var, responseType);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return null;

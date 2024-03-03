@@ -29,7 +29,7 @@ public class UserProvider {
     }
 
     public PlayerData getUserByName(String name) {
-        return apiClient.get(ENDPOINT.concat(name), PlayerData.class);
+        return apiClient.get(ENDPOINT.concat("/" + name), PlayerData.class);
     }
     public void deleteUser(String name){
         apiClient.delete(ENDPOINT.concat(name));

@@ -13,14 +13,9 @@ public class PlayerData {
     private boolean premium;
     private String username;
     private String password;
+    private int coins;
+    private int vipPoints;
     private Auth authInfo;
     private RankInfo rankInfo;
-    private int vipPoints;
-    private int coins;
-    private Punishment Activepunishment;
-
-    public PlayerData(String name, String password){
-        this.username = name;
-        this.password = password;
-    }
+    private Punishment activePunishment;
 }
