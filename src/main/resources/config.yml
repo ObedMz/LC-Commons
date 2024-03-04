@@ -1,3 +1,4 @@
+loadJoin: true
 permissions:
   DEFAULT:
     - minelc.default

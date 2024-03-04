@@ -1,14 +1,15 @@
 package obed.me.lccommons.api.services;
 
+import lombok.Getter;
 import obed.me.lccommons.api.entities.groups.Rank;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
+@Getter
 public class RankProvider {
     private static volatile RankProvider instance;
     private final WebClient apiClient = WebClient.getInstance();
-    private ConcurrentHashMap<String, Rank> rankCache = new ConcurrentHashMap<>();
+    private Rank defaultRank;
     private RankProvider() {
     }
 
@@ -28,6 +29,13 @@ public class RankProvider {
 
     public Rank getRankByName(String name) {
         return apiClient.get(EndPointType.RANK.getEndPoint().concat(name), Rank.class);
+    }
+    public Rank getStoredDefaultRank() {
+        defaultRank = apiClient.get(EndPointType.RANK.getEndPoint().concat("/default"), Rank.class);
+        return defaultRank;
+    }
+    public void setDefaultRank(Rank rank){
+        defaultRank = rank;
     }
     public List<Rank> getAllRanks() {
         return List.of(apiClient.get(EndPointType.RANKS.getEndPoint(), Rank[].class));
