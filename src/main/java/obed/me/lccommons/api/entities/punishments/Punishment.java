@@ -18,6 +18,6 @@ public class Punishment {
     private Boolean active;
 
     private Boolean permanent;
-
+    private Boolean punishmentIP;
     private PunishmentType type;
 }
