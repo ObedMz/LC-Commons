@@ -21,24 +21,28 @@ public class RankDataLoader implements Listener {
             @Override
             public void run() {
                 Player p = e.getPlayer();
+                System.out.println(p.getName());
                 PlayerData playerData = UserProvider.getInstance().getUserByName(p.getName());
                 if(playerData == null){
                     e.disallow(PlayerLoginEvent.Result.KICK_FULL, ChatColor.RED + "No estás autenticado.");
                     return;
                 }
-                if(UserProvider.getInstance().isExpiredRank(playerData))
+                if(UserProvider.getInstance().isExpiredRank(playerData)){
                     playerData.getRankInfo().setRank(RankProvider.getInstance().getDefaultRank());
-
-                playerData = UserProvider.getInstance().createUser(playerData);
-
+                    playerData = UserProvider.getInstance().createUser(playerData);
+                }
                 Rank rank = playerData.getRankInfo().getRank();
                 rank.getPermissions().forEach(str -> p.addAttachment(SpigotCommons.getInstance(), str, true));
                 SpigotCommons.getInstance().getConfig().getStringList(
-                        "permissions." + rank.getName().toUpperCase()).forEach(str ->
-                        p.addAttachment(SpigotCommons.getInstance(), str.startsWith("-") ?
-                                str.replaceFirst("-", "") :
-                                str, !str.startsWith("-")));
+                        "permissions." + rank.getName().toUpperCase()).forEach(str ->{
+                            System.out.println(str);
+                            p.addAttachment(SpigotCommons.getInstance(), str.startsWith("-") ?
+                                    str.replaceFirst("-", "") :
+                                    str, !str.startsWith("-"));
+                        }
+                );
                 System.out.println("Data loaded for user: " + playerData.getUsername());
+
             }
         }.runTaskAsynchronously(SpigotCommons.getInstance());
     }

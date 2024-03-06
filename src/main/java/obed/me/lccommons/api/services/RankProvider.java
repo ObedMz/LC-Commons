@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 public class RankProvider {
     private static volatile RankProvider instance;
-    private final WebClient apiClient = WebClient.getInstance();
+    private final APIClient apiClient = APIClient.getInstance();
     private Rank defaultRank;
     private RankProvider() {
     }
@@ -28,7 +28,7 @@ public class RankProvider {
     }
 
     public Rank getRankByName(String name) {
-        return apiClient.get(EndPointType.RANK.getEndPoint().concat(name), Rank.class);
+        return apiClient.get(EndPointType.RANK.getEndPoint().concat("/" + name), Rank.class);
     }
     public Rank getStoredDefaultRank() {
         defaultRank = apiClient.get(EndPointType.RANK.getEndPoint().concat("/default"), Rank.class);

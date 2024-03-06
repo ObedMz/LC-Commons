@@ -3,8 +3,8 @@ permissions:
   DEFAULT:
     - minelc.default
     - minelc.tell
-  VIP:
-    - minelc.vip
+  PERUANO:
+    - minelc.peruano
     - "{heredar: DEFAULT}"
   SVIP:
     - minelc.svip

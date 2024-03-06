@@ -1,6 +1,7 @@
 package obed.me.lccommons.api.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Data;
 
 import java.io.IOException;
@@ -12,22 +13,24 @@ import java.net.http.HttpResponse;
 
 
 @Data
-public class WebClient {
-    private static volatile WebClient instance;
+public class APIClient {
+    private static volatile APIClient instance;
     private final HttpClient httpClient;
     private final ObjectMapper mapper;
     private String BASE_ENDPOINT = "http://213.133.102.110:30000/";
 
-    private WebClient() {
+    private APIClient() {
         this.mapper = new ObjectMapper();
+        this.mapper.registerModule(new JavaTimeModule());
+
         this.httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
     }
 
-    public static WebClient getInstance(){
+    public static APIClient getInstance(){
         if(instance == null){
-            synchronized (WebClient.class){
+            synchronized (APIClient.class){
                 if(instance == null)
-                    instance = new WebClient();
+                    instance = new APIClient();
             }
         }
         return instance;
@@ -38,8 +41,6 @@ public class WebClient {
                     header("Content-Type", "application/json").POST
                             (HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(body))).build();
             String var = httpClient.send(request, HttpResponse.BodyHandlers.ofString()).body();
-
-            System.out.println(var);
             return mapper.readValue(var, responseType);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -49,10 +50,17 @@ public class WebClient {
 
     public <E> E get(String endpoint, Class<E> responseType) {
         try {
-
-            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(BASE_ENDPOINT.concat(endpoint))).
-                    header("Content-Type", "application/json").GET().build();
-            return mapper.readValue(httpClient.send(request, HttpResponse.BodyHandlers.ofString()).body(), responseType);
+            HttpResponse<String> httpResponse = httpClient.send(
+                    HttpRequest.newBuilder()
+                            .uri(URI.create(BASE_ENDPOINT.concat(endpoint)))
+                            .header("Content-Type", "application/json")
+                            .GET()
+                            .build(),
+                    HttpResponse.BodyHandlers.ofString()
+            );
+            if (httpResponse.statusCode() == 404)
+                return null;
+            return mapper.readValue(httpResponse.body(), responseType);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return null;
