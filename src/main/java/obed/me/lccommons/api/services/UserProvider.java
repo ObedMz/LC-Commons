@@ -67,15 +67,14 @@ public class UserProvider {
         return currentInstant.isAfter(expirationInstant);
     }
 
-    public boolean isExpiredPunishment(PlayerData jug) {
-
+    public PlayerData checkActivePunishment(PlayerData jug) {
         Instant currentInstant = Instant.now();
-        Instant expirationInstant = jug.getRankInfo().getExpiresInstant();
-
-        if(expirationInstant == null)
-            return false;
-
-        return currentInstant.isAfter(expirationInstant);
+        jug.getActivePunishment().getPunishmentList().forEach(p -> {
+            Instant expirationInstant = p.getExpiresInstant();
+            if(currentInstant.isAfter(expirationInstant))
+                jug.getActivePunishment().getPunishmentList().remove(p);
+        });
+        return jug;
     }
 
 }
