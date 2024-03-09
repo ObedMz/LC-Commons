@@ -16,9 +16,9 @@ public final class SpigotCommons extends JavaPlugin {
     }
     @Override
     public void onEnable() {
-        if(getConfig().getBoolean("loadJoin")){
+        saveDefaultConfig();
+        if(getConfig().getBoolean("loadJoin"))
             Bukkit.getPluginManager().registerEvents(new RankDataLoader(), this);
-        }
     }
 
     public static SpigotCommons getInstance(){

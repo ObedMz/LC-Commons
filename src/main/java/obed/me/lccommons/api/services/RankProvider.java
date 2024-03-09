@@ -43,6 +43,6 @@ public class RankProvider {
 
 
     public void deleteRank(String name){
-        apiClient.delete(EndPointType.RANK.getEndPoint().concat(name));
+        apiClient.delete(EndPointType.RANK.getEndPoint().concat("/" + name));
     }
 }

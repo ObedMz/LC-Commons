@@ -47,7 +47,6 @@ public class PunishmentChecker implements Listener {
             @Override
             public void run() {
 
-
             }
         }.runTaskAsynchronously(SpigotCommons.getInstance());
     }

@@ -23,19 +23,23 @@ public class UserProvider {
         return instance;
     }
     public PlayerData getUserCache(String name){
+        name = name.toLowerCase();
         return cache.getOrDefault(name, null);
     }
 
     public void removeUserCache(String name){
-         cache.remove(name);
+        name = name.toLowerCase();
+         cache.remove(name.toLowerCase());
     }
     public PlayerData createUser(PlayerData user) {
+        user.setUsername(user.getUsername().toLowerCase());
         user = apiClient.create(ENDPOINT, user, PlayerData.class);
         cache.put(user.getUsername(), user);
         return user;
     }
 
     public PlayerData getUserByName(String name) {
+        name = name.toLowerCase();
         PlayerData playerData = apiClient.get(ENDPOINT.concat("/" + name), PlayerData.class);
         if(playerData != null){
             cache.put(name, playerData);
@@ -49,6 +53,7 @@ public class UserProvider {
         cache.put(playerData.getUsername(), playerData);
     }
     public void deleteUser(String name){
+        name = name.toLowerCase();
         apiClient.delete(ENDPOINT.concat(name));
         cache.remove(name);
     }

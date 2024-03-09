@@ -53,8 +53,14 @@ public class RankDataLoader implements Listener {
     }
 
     private void addPermissions(Player player, Rank rank) {
-        rank.getPermissions().forEach(permission -> player.addAttachment(SpigotCommons.getInstance(), permission, true));
-        getPermissionList(rank).forEach(permission -> player.addAttachment(SpigotCommons.getInstance(), permission, true));
+        rank.getPermissions().forEach(permission -> {
+            System.out.println(permission);
+            player.addAttachment(SpigotCommons.getInstance(), permission, true);
+        });
+        getPermissionList(rank).forEach(permission -> {
+            System.out.println(permission);
+            player.addAttachment(SpigotCommons.getInstance(), permission, true);
+        });
     }
 
     private List<String> getPermissionList(Rank rank) {
@@ -72,8 +78,7 @@ public class RankDataLoader implements Listener {
 
     private List<String> getInheritance(String path) {
         List<String> permissions = new ArrayList<>();
-        String root = "permission." + path.toUpperCase(Locale.ROOT);
-
+        String root = "permissions." + path.toUpperCase(Locale.ROOT);
         for (String permission : SpigotCommons.getInstance().getConfig().getStringList(root)) {
             Matcher matcher = INHERITANCE_PATTERN.matcher(permission);
             if (matcher.matches()) {

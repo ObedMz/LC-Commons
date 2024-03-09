@@ -8,6 +8,7 @@ import obed.me.lccommons.api.services.RankProvider;
 import obed.me.lccommons.api.services.UserProvider;
 import obed.me.lccommons.api.utils.CommonsUtil;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,8 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
+    }
+    public static void updateUser(){
         String name = "osito";
         PlayerData playerData = UserProvider.getInstance().getUserByName(name);
         if(playerData == null)
@@ -26,9 +29,7 @@ public class Main {
         playerData.getAuthInfo().setLastConnection(Instant.now());
         UserProvider.getInstance().savePlayer(playerData);
         System.out.println("se actualizaron los datos.");
-
     }
-
     public static void registerTest(){
         String name = "osito";
         PlayerData playerData = UserProvider.getInstance().getUserByName(name);
