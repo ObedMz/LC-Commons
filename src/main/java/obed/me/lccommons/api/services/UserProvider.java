@@ -23,12 +23,11 @@ public class UserProvider {
         return instance;
     }
     public PlayerData getUserCache(String name){
-        PlayerData playerData = cache.getOrDefault(name, null);
-        if(playerData == null){
-            playerData = getUserByName(name);
-            cache.put(name, playerData);
-        }
-        return playerData;
+        return cache.getOrDefault(name, null);
+    }
+
+    public void removeUserCache(String name){
+         cache.remove(name);
     }
     public PlayerData createUser(PlayerData user) {
         user = apiClient.create(ENDPOINT, user, PlayerData.class);
