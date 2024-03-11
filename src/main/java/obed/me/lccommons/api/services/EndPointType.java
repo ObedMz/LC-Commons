@@ -4,8 +4,8 @@ public enum EndPointType {
     USER ("v1/player"),
     RANK("v1/rank"),
     RANKS("v1/ranks"),
+    PUNISHMENTS("v1/punishments"),
     PUNISHMENT("v1/punishment");
-
     private final String value;
 
     private EndPointType(String value) {

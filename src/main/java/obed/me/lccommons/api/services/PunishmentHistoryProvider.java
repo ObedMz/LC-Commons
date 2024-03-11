@@ -1,47 +1,35 @@
 package obed.me.lccommons.api.services;
 
 import obed.me.lccommons.api.entities.punishments.Punishment;
-import obed.me.lccommons.api.entities.punishments.PunishmentHistory;
-import obed.me.lccommons.api.utils.CommonsUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class PunishmentHistoryProvider {
 
     private static volatile PunishmentHistoryProvider instance;
     private final APIClient apiClient = APIClient.getInstance();
-    private ConcurrentHashMap<String, PunishmentHistory> cache = new ConcurrentHashMap<>();
-    private final String ENDPOINT = EndPointType.PUNISHMENT.getEndPoint();
+    private final String ENDPOINT = EndPointType.PUNISHMENTS.getEndPoint();
 
     public static PunishmentHistoryProvider getInstance(){
         if(instance == null){
-            synchronized (PunishmentHistory.class){
-                if(instance == null){
+            synchronized (PunishmentHistoryProvider.class){
+                if(instance == null)
                     instance = new PunishmentHistoryProvider();
-                }
-
             }
         }
         return instance;
     }
 
-    public List<PunishmentHistory> getActivePunishmentIP(String ip) {
-        List<PunishmentHistory> list = new ArrayList<>();
+    public List<Punishment> getByIP(String ip, boolean bol) {
+        return List.of(apiClient.get(ENDPOINT.concat("/ip/" + ip +"?active=" + bol), Punishment[].class));
+    }
+    public List<Punishment> getByPlayer(UUID uuid, boolean bol) {
+        return List.of(apiClient.get(ENDPOINT.concat("/player/" + uuid +"?active=" + bol), Punishment[].class));
+    }
 
-        for (PunishmentHistory punishmentHistory : List.of(apiClient.get(ENDPOINT.concat("/ip/history?ip=" + ip), PunishmentHistory[].class))) {
-            for(Punishment punishment : punishmentHistory.getPunishmentList()){
-                  if(punishment.getIp().equals(ip)){
-                      list.add(punishmentHistory);
-                      break;
-                  }
-              }
-
-        }
-
-        return list;
+    public List<Punishment> getAllPunishment(boolean bol) {
+        return List.of(apiClient.get(ENDPOINT.concat("?active=" + bol), Punishment[].class));
     }
 
     public void savePunishment(UUID player, Punishment punishment) {
@@ -49,7 +37,10 @@ public class PunishmentHistoryProvider {
 
     }
 
-    public void savePunishments(UUID player, List<Punishment> punishments) {
-        apiClient.create(("v1/punishments/" + player), punishments, Punishment[].class);
+    public void savePunishments(List<Punishment> punishments) {
+        apiClient.create(ENDPOINT, punishments, Punishment[].class);
+    }
+    public void savePunishment(Punishment punishments) {
+        apiClient.create("v1/punishment", punishments, Punishment.class);
     }
 }

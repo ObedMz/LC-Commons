@@ -57,11 +57,9 @@ public class UserProvider {
         apiClient.delete(ENDPOINT.concat(name));
         cache.remove(name);
     }
-    public boolean isExpiredRank(PlayerData jug) {
-        if(jug.getRankInfo().isPermanent()||
-        jug.getRankInfo().getRank().equals(RankProvider.getInstance().getStoredDefaultRank())){
+    public Boolean isExpiredRank(PlayerData jug) {
+        if(jug.getRankInfo().isPermanent()|| jug.getRankInfo().getRank().getDefaultRank())
             return false;
-        }
         Instant currentInstant = Instant.now();
         Instant expirationInstant = jug.getRankInfo().getExpiresInstant();
 
@@ -69,16 +67,6 @@ public class UserProvider {
             return false;
 
         return currentInstant.isAfter(expirationInstant);
-    }
-
-    public PlayerData checkActivePunishment(PlayerData jug) {
-        Instant currentInstant = Instant.now();
-        jug.getActivePunishment().getPunishmentList().forEach(p -> {
-            Instant expirationInstant = p.getExpiresInstant();
-            if(currentInstant.isAfter(expirationInstant))
-                jug.getActivePunishment().getPunishmentList().remove(p);
-        });
-        return jug;
     }
 
 }

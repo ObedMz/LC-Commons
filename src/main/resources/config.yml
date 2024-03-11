@@ -1,4 +1,11 @@
 loadJoin: true
+redis:
+  ip: 213.133.102.110
+  port: 30090
+  pwd: "qwerty"
+  key: "SERVER_UPDATE"
+  max: 10
+
 permissions:
   DEFAULT:
     - minelc.default

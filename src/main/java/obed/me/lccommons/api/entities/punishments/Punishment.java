@@ -19,6 +19,7 @@ public class Punishment {
 
     private Boolean permanent;
     private String ip;
+    private UUID player;
     private Boolean isIP;
     private PunishmentType type;
 }
