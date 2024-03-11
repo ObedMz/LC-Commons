@@ -11,7 +11,7 @@ import java.util.concurrent.*;
 
 @Data
 public class RedisProvider {
-    private static volatile RedisProvider INSTANCE = new RedisProvider();
+    private static volatile RedisProvider INSTANCE;
     private final ScheduledExecutorService schedule = Executors.newScheduledThreadPool(1);
     private final ExecutorService poolExecutor = Executors.newCachedThreadPool();
     private Boolean Running = false;
