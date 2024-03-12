@@ -32,11 +32,6 @@ public class PunishmentHistoryProvider {
         return List.of(apiClient.get(ENDPOINT.concat("?active=" + bol), Punishment[].class));
     }
 
-    public void savePunishment(UUID player, Punishment punishment) {
-        apiClient.create(ENDPOINT.concat("/" + player), punishment, Punishment.class);
-
-    }
-
     public void savePunishments(List<Punishment> punishments) {
         apiClient.create(ENDPOINT, punishments, Punishment[].class);
     }

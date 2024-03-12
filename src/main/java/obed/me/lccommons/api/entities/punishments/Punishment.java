@@ -7,6 +7,7 @@ import java.util.UUID;
 
 @Data
 public class Punishment {
+    private UUID id;
     private UUID punisher;
 
     private String reason;

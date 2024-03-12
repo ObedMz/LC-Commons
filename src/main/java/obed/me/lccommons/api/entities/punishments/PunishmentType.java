@@ -3,7 +3,6 @@ package obed.me.lccommons.api.entities.punishments;
 public enum PunishmentType {
 
     BAN,
-    BANIP,
     MUTE,
     KICK,
     WARN;

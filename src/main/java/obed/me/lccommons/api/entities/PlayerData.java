@@ -4,7 +4,6 @@ import lombok.Data;
 import obed.me.lccommons.api.entities.auth.Auth;
 import obed.me.lccommons.api.entities.groups.RankInfo;
 import obed.me.lccommons.api.entities.punishments.Punishment;
-import obed.me.lccommons.api.entities.punishments.PunishmentHistory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +19,5 @@ public class PlayerData {
     private int vipPoints;
     private Auth authInfo = new Auth();
     private RankInfo rankInfo = new RankInfo();
-    private PunishmentHistory activePunishment = new PunishmentHistory();
     private List<Punishment> punishmentList = new ArrayList<>();
 }
