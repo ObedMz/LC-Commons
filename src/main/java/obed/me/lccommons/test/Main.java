@@ -5,6 +5,7 @@ import obed.me.lccommons.api.entities.punishments.Punishment;
 import obed.me.lccommons.api.entities.punishments.PunishmentType;
 import obed.me.lccommons.api.services.PunishmentHistoryProvider;
 import obed.me.lccommons.api.services.UserProvider;
+import obed.me.lccommons.api.utils.CommonsUtil;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -12,21 +13,14 @@ import java.util.UUID;
 
 public class Main {
     public static void main(String[] args) {
-        PlayerData playerData = UserProvider.getInstance().getUserByName("obedmz");
+        PlayerData pp = new PlayerData();
+        pp.setUsername("iTzdemonDj");
+        pp.setPassword("pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=");
+        pp.setPremium(false);
 
-        Punishment punishment = new Punishment();
-        punishment.setActive(true);
-        punishment.setPermanent(true);
-        punishment.setIp("192.168.0.1");
-        punishment.setIsIP(false);
-        punishment.setType(PunishmentType.BAN);
-        punishment.setIssuedInstant(Instant.now());
-        punishment.setExpiresInstant(Instant.now().plus(Duration.ofMinutes(2)));
-        punishment.setPlayer(playerData.getUuid());
-        punishment.setReason("por peruano");
-        punishment.setPunisher(UUID.randomUUID());
-        PunishmentHistoryProvider.getInstance().savePunishment(punishment);
+        PlayerData playerData = UserProvider.getInstance().createUser(pp);
         System.out.println(playerData);
+
     }
     //La sanción expira correctamente y se cambia su estado a inactivo.
     //Agregar validación de si es permanente antes de hacer la validación de expiración.

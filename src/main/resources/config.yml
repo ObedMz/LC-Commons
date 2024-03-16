@@ -2,7 +2,7 @@ loadJoin: true
 redis:
   ip: 213.133.102.110
   port: 30090
-  pwd: "qwerty"
+  pwd: "g1q3684g#$"
   key: "SERVER_UPDATE"
   max: 10
 
