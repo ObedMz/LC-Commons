@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -31,6 +32,11 @@ public class RankDataLoader implements Listener {
                 loadPlayerData(player, playerData);
             }
         }.runTaskAsynchronously(SpigotCommons.getInstance());
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        UserProvider.getInstance().removeUserCache(event.getPlayer().getName().toLowerCase());
     }
 
     private void loadPlayerData(Player player, PlayerData playerData) {
