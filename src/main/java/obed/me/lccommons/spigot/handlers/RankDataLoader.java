@@ -2,6 +2,7 @@ package obed.me.lccommons.spigot.handlers;
 
 import obed.me.lccommons.api.entities.PlayerData;
 import obed.me.lccommons.api.entities.groups.Rank;
+import obed.me.lccommons.api.entities.groups.RankInfo;
 import obed.me.lccommons.api.services.RankProvider;
 import obed.me.lccommons.api.services.UserProvider;
 import obed.me.lccommons.spigot.SpigotCommons;
@@ -44,11 +45,15 @@ public class RankDataLoader implements Listener {
             player.kickPlayer(ChatColor.RED + "No estás autenticado.");
             return;
         }
-        if (UserProvider.getInstance().isExpiredRank(playerData)) {
-            playerData.getRankInfo().setRank(RankProvider.getInstance().getDefaultRank());
+        RankInfo rankInfo = playerData.getRankInfo();
+        if (rankInfo.getRank() == null || UserProvider.getInstance().isExpiredRank(playerData)) {
+            Rank defaultRank = RankProvider.getInstance().getStoredDefaultRank();
+            rankInfo.setRank(defaultRank);
             UserProvider.getInstance().savePlayer(playerData);
         }
-        getPermissionList(playerData.getRankInfo().getRank()).forEach(permission -> player.addAttachment(SpigotCommons.getInstance(), permission, true));
+
+        Rank playerRank = rankInfo.getRank();
+        getPermissionList(playerRank).forEach(permission -> player.addAttachment(SpigotCommons.getInstance(), permission, true));
         System.out.println("Data loaded for user: " + playerData.getUsername());
     }
 
