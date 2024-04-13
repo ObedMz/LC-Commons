@@ -42,7 +42,9 @@ public class RankDataLoader implements Listener {
 
     private void loadPlayerData(Player player, PlayerData playerData) {
         if (playerData == null) {
-            player.kickPlayer(ChatColor.RED + "No estás autenticado.");
+            SpigotCommons.getInstance().getServer().getScheduler().runTask(
+                SpigotCommons.getInstance(),
+                () -> player.kickPlayer(ChatColor.RED + "No estás autenticado. Entra de vuelta"));
             return;
         }
         RankInfo rankInfo = playerData.getRankInfo();
@@ -54,7 +56,6 @@ public class RankDataLoader implements Listener {
 
         Rank playerRank = rankInfo.getRank();
         getPermissionList(playerRank).forEach(permission -> player.addPermission(permission));
-        System.out.println("Data loaded for user: " + playerData.getUsername());
     }
 
     private List<String> getPermissionList(Rank rank) {
