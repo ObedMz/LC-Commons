@@ -53,7 +53,7 @@ public class RankDataLoader implements Listener {
         }
 
         Rank playerRank = rankInfo.getRank();
-        getPermissionList(playerRank).forEach(permission -> player.addAttachment(SpigotCommons.getInstance(), permission, true));
+        getPermissionList(playerRank).forEach(permission -> player.addPermission(permission));
         System.out.println("Data loaded for user: " + playerData.getUsername());
     }
 
